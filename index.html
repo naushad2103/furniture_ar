@@ -78,6 +78,12 @@
   width: 100vw;
   height: 100dvh;
 }
+.dimensionLineContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
                     .dim {
                       font-size: 3vw;
                     }
@@ -159,15 +165,23 @@
       modelViewer.activateAR();
     });
 
-    function resizeSVG() {
-    const viewerRect = modelViewer.getBoundingClientRect();
-    svg.setAttribute("width", viewerRect.width);
-    svg.setAttribute("height", viewerRect.height);
-    svg.style.position = "fixed";
-    svg.style.top = `${viewerRect.top}px`;
-    svg.style.left = `${viewerRect.left}px`;
-  }
+   const svg = modelViewer.querySelector('#dimLines');
 
+function resizeAndPositionSVG() {
+  const rect = modelViewer.getBoundingClientRect();
+  svg.setAttribute("width", rect.width);
+  svg.setAttribute("height", rect.height);
+  svg.style.position = "absolute";
+  svg.style.top = `${rect.top}px`;
+  svg.style.left = `${rect.left}px`;
+  svg.style.pointerEvents = "none";
+}
+
+window.addEventListener("resize", resizeAndPositionSVG);
+window.addEventListener("scroll", resizeAndPositionSVG);
+window.addEventListener("orientationchange", resizeAndPositionSVG);
+modelViewer.addEventListener("load", resizeAndPositionSVG);
+resizeAndPositionSVG();
                   function setVisibility(visible) {
                     dimElements.forEach((element) => {
                       if (visible) {
@@ -289,8 +303,7 @@
                     renderSVG();
 
                     modelViewer.addEventListener('camera-change', renderSVG);
-                    window.addEventListener("resize", resizeSVG);
-  resizeSVG();
+          
                   });
                 </script>
               
