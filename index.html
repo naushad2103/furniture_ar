@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <title>Study Desk WebAR</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <style>
-    body { margin: 0; background: #e0e0e0; }
-   model-viewer {
+    <style>
+        body { margin: 0; background: #e0e0e0; }
+ model-viewer {
   width: 100vw;
   height: 100dvh;
 }
@@ -29,10 +29,86 @@
     #ar-button:active {
       background-color: #555;
     }
+                  #controls {
+                    position: absolute;
+                    bottom: 16px;
+                    left: 16px;
+                    max-width: unset;
+                    transform: unset;
+                    pointer-events: auto;
+                    z-index: 100;
+                  }
+
+                  .dot {
+                    display: none;
+                  }
+
+                  .glass {
+                    background: rgba(255, 255, 255, 0.37);
+                    backdrop-filter: blur(8px) contrast(0.89) saturate(1.27);
+                    -webkit-backdrop-filter: blur(8px) contrast(0.89) saturate(1.27);
+                    border: 1px solid rgba(255, 255, 255, 0.4);
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+                  }
+
+                  .dim {
+                    border-radius: 4px;
+                    border: none;
+                    box-sizing: border-box;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+                    color: rgba(0, 0, 0, 0.8);
+                    display: block;
+                    font-family: Futura, Helvetica Neue, sans-serif;
+                    font-size: 1em;
+                    font-weight: 700;
+                    max-width: 128px;
+                    overflow-wrap: break-word;
+                    padding: 0.5em 1em;
+                    position: absolute;
+                    width: max-content;
+                    height: max-content;
+                    transform: translate3d(-50%, -50%, 0);
+                    pointer-events: none;
+                    --min-hotspot-opacity: 0;
+                  }
+
+                  @media only screen and (max-width: 800px) {
+                    model-viewer {
+  width: 100vw;
+  height: 100dvh;
+}
+                    .dim {
+                      font-size: 3vw;
+                    }
+                  }
+
+                  .dimensionLineContainer {
+                    pointer-events: none;
+                    display: block;
+                  }
+
+                  .dimensionLine {
+                    stroke: #16a5e6;
+                    stroke-width: 2;
+                    stroke-dasharray: 2;
+                  }
+
+                  .hide {
+                    display: none;
+                  }
+
+                  /* This keeps child nodes hidden while the element loads */
+                  :not(:defined)>* {
+                    display: none;
+                  }
+                </style>
+  <style>
+  
   </style>
 </head>
 <body>
-<model-viewer id="dimension-demo" ar ar-modes="webxr" ar-placement="floor" ar-scale="auto" camera-orbit="-30deg auto auto" max-camera-orbit="auto 100deg auto" shadow-intensity="1" camera-controls touch-action="pan-y" src="assets/Models/wooden_table01.glb" alt="A 3D model of an armchair.">
+<model-viewer id="dimension-demo" ar ar-modes="webxr"  ar-placement="floor" ar-scale="fixed" camera-orbit="-30deg auto auto" max-camera-orbit="auto 100deg auto" shadow-intensity="1" camera-controls touch-action="pan-y" src="assets/Models/wooden_table01.glb" alt="A 3D model of an armchair.">
                   <button slot="hotspot-dot+X-Y+Z" class="dot" data-position="1 -1 1" data-normal="1 0 0"></button>
                   <button slot="hotspot-dim+X-Y" class="dim" data-position="1 -1 0" data-normal="1 0 0"></button>
                   <button slot="hotspot-dot+X-Y-Z" class="dot" data-position="1 -1 -1" data-normal="1 0 0"></button>
@@ -82,6 +158,15 @@
     arButton.addEventListener("click", () => {
       modelViewer.activateAR();
     });
+
+    function resizeSVG() {
+    const viewerRect = modelViewer.getBoundingClientRect();
+    svg.setAttribute("width", viewerRect.width);
+    svg.setAttribute("height", viewerRect.height);
+    svg.style.position = "fixed";
+    svg.style.top = `${viewerRect.top}px`;
+    svg.style.left = `${viewerRect.left}px`;
+  }
 
                   function setVisibility(visible) {
                     dimElements.forEach((element) => {
@@ -204,82 +289,10 @@
                     renderSVG();
 
                     modelViewer.addEventListener('camera-change', renderSVG);
+                    window.addEventListener("resize", resizeSVG);
+  resizeSVG();
                   });
                 </script>
-                <style>
-                  #controls {
-                    position: absolute;
-                    bottom: 16px;
-                    left: 16px;
-                    max-width: unset;
-                    transform: unset;
-                    pointer-events: auto;
-                    z-index: 100;
-                  }
-
-                  .dot {
-                    display: none;
-                  }
-
-                  .glass {
-                    background: rgba(255, 255, 255, 0.37);
-                    backdrop-filter: blur(8px) contrast(0.89) saturate(1.27);
-                    -webkit-backdrop-filter: blur(8px) contrast(0.89) saturate(1.27);
-                    border: 1px solid rgba(255, 255, 255, 0.4);
-                    padding: 0.5rem;
-                    border-radius: 0.5rem;
-                  }
-
-                  .dim {
-                    border-radius: 4px;
-                    border: none;
-                    box-sizing: border-box;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-                    color: rgba(0, 0, 0, 0.8);
-                    display: block;
-                    font-family: Futura, Helvetica Neue, sans-serif;
-                    font-size: 1em;
-                    font-weight: 700;
-                    max-width: 128px;
-                    overflow-wrap: break-word;
-                    padding: 0.5em 1em;
-                    position: absolute;
-                    width: max-content;
-                    height: max-content;
-                    transform: translate3d(-50%, -50%, 0);
-                    pointer-events: none;
-                    --min-hotspot-opacity: 0;
-                  }
-
-                  @media only screen and (max-width: 800px) {
-                    model-viewer {
-  width: 100vw;
-  height: 100dvh;
-}
-                    .dim {
-                      font-size: 3vw;
-                    }
-                  }
-
-                  .dimensionLineContainer {
-                    pointer-events: none;
-                    display: block;
-                  }
-
-                  .dimensionLine {
-                    stroke: #16a5e6;
-                    stroke-width: 2;
-                    stroke-dasharray: 2;
-                  }
-
-                  .hide {
-                    display: none;
-                  }
-
-                  /* This keeps child nodes hidden while the element loads */
-                  :not(:defined)>* {
-                    display: none;
-                  }
-                </style>
+              
 </body>
 </html>
