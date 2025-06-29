@@ -1,126 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Study Desk WebAR</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <style>
-        body { margin: 0; background: #e0e0e0; }
- model-viewer {
-  width: 100vw;
-  height: 100dvh;
-}
-.maincontainer{
-  height:100dvh;
-}
-      #ar-button {
-      position: absolute;
-      top: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
-      background-color: #333;
-      color: #fff;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 10;
-    }
+    <head>
+    <meta charset="UTF-8" />
+  <title>Furniture WebAR</title>
+    <meta name="description" content="&lt;model-viewer&gt; template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="./styles.css" rel="stylesheet"/>
+  </head>
 
-    #ar-button:active {
-      background-color: #555;
-    }
-                  #controls {
-                    position: absolute;
-                    bottom: 16px;
-                    left: 16px;
-                    max-width: unset;
-                    transform: unset;
-                    pointer-events: auto;
-                    z-index: 100;
-                  }
-
-                  .dot {
-                    display: none;
-                  }
-
-                  .glass {
-                    background: rgba(255, 255, 255, 0.37);
-                    backdrop-filter: blur(8px) contrast(0.89) saturate(1.27);
-                    -webkit-backdrop-filter: blur(8px) contrast(0.89) saturate(1.27);
-                    border: 1px solid rgba(255, 255, 255, 0.4);
-                    padding: 0.5rem;
-                    border-radius: 0.5rem;
-                  }
-
-                  .dim {
-                    border-radius: 4px;
-                    border: none;
-                    box-sizing: border-box;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-                    color: rgba(0, 0, 0, 0.8);
-                    display: block;
-                    font-family: Futura, Helvetica Neue, sans-serif;
-                    font-size: 1em;
-                    font-weight: 700;
-                    max-width: 128px;
-                    overflow-wrap: break-word;
-                    padding: 0.5em 1em;
-                    position: absolute;
-                    width: max-content;
-                    height: max-content;
-                    transform: translate3d(-50%, -50%, 0);
-                    pointer-events: none;
-                    --min-hotspot-opacity: 0;
-                  }
-
-                  @media only screen and (max-width: 800px) {
-                    model-viewer {
-  width: 100vw;
-  height: 100dvh;
-}
-
-   svg{ position: absolute;
-    top: -80px;
-    left: 0px;
-    pointer-events: none;}
-    
-                    .dim {
-                      font-size: 3vw;
-                    }
-                  }
-
-                  .dimensionLineContainer {
-                    position: absolute;
-                     top: -80px;
-                    pointer-events: none;
-                    display: block;
-                  }
-
-                  .dimensionLine {
-                    stroke: #16a5e6;
-                    stroke-width: 2;
-                    stroke-dasharray: 2;
-                  }
-
-                  .hide {
-                    display: none;
-                  }
-
-                  /* This keeps child nodes hidden while the element loads */
-                  :not(:defined)>* {
-                    display: none;
-                  }
-                </style>
-  <style>
-  
-  </style>
-</head>
 <body>
-  <div class="maincontainer">
-<model-viewer id="dimension-demo" ar ar-modes="webxr"  ar-placement="floor" ar-scale="auto" camera-orbit="-30deg auto auto" max-camera-orbit="auto 100deg auto" shadow-intensity="1" camera-controls touch-action="pan-y" src="assets/Models/wooden_table01.glb" alt="A 3D model of an armchair.">
-                  <button slot="hotspot-dot+X-Y+Z" class="dot" data-position="1 -1 1" data-normal="1 0 0"></button>
+
+<model-viewer id="desk"  ar ar-modes="webxr"  ar-placement="floor" ar-scale="fixed" reveal="auto" camera-orbit="-30deg auto auto" max-camera-orbit="auto 100deg auto" shadow-intensity="1" camera-controls touch-action="pan-y" src="assets/models/desk.glb" alt="A 3D model of an armchair.">
+                 <div class="progress-bar hide" slot="progress-bar">
+          <div class="update-bar"></div>
+      </div>
+       </button><button class="hotspot-icon" id="toggleVariantBtn" slot="hotspot-3" data-position="0.16m 1.25m 0.96m" data-normal="0m 1m 2.220446049250313e-16m" data-visibility-attribute="visible">
+        <img src="assets/icons/palette.png" alt="Choose Material" />
+      </button>
+  
+  <button slot="hotspot-dot+X-Y+Z" class="dot" data-position="1 -1 1" data-normal="1 0 0"></button>
                   <button slot="hotspot-dim+X-Y" class="dim" data-position="1 -1 0" data-normal="1 0 0"></button>
                   <button slot="hotspot-dot+X-Y-Z" class="dot" data-position="1 -1 -1" data-normal="1 0 0"></button>
                   <button slot="hotspot-dim+X-Z" class="dim" data-position="1 0 -1" data-normal="1 0 0"></button>
@@ -131,46 +29,113 @@
                   <button slot="hotspot-dot-X-Y-Z" class="dot" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
                   <button slot="hotspot-dim-X-Y" class="dim" data-position="-1 -1 0" data-normal="-1 0 0"></button>
                   <button slot="hotspot-dot-X-Y+Z" class="dot" data-position="-1 -1 1" data-normal="-1 0 0"></button>
-                  <svg id="dimLines" width="100%" height="100lvh" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
+                  
+                
+
+                  <svg id="dimLines" width="100%" height="100dvh" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                   </svg>
+
                 <button id="ar-button">View in AR</button>
+                <div id="material-info"></div>
                   <div id="controls" class="dim glass">
                     <label for="src">Product:</label>
                     <select id="src">
-                      <option value="assets/Models/wooden_table01.glb">Table</option>
-                      <option value="assets/Models/eames_chair.glb">Chair</option>
-                      <option value="assets/Models/pwood_basic_veneer.glb">Cactus</option>
+                      <option value="assets/models/desk.glb">Desk</option>
+                      <option value="assets/models/eames_chair.glb">Chair</option>
+                      <option value="assets/models/pwood_basic_veneer.glb">Cactus</option>
                     </select><br>
 
                     <label for="show-dimensions">Show Dimensions:</label>
-                    <input id="show-dimensions" type="checkbox" checked="true">
+                    <input id="show-dimensions" type="checkbox" >
                   </div>
-                </model-viewer>
-</div>
-                <script type="module">
-                  const modelViewer = document.querySelector('#dimension-demo');
 
-                  modelViewer.querySelector('#src').addEventListener('input', (event) => {
+  <div id="variant-swatches" class="variant-panel">
+  
+    
+</div>
+                </model-viewer>
+
+             
+   
+              <script src="script.js"></script>
+          <script type="module">
+  const modelViewer = document.querySelector("model-viewer#desk");
+const swatchContainer = document.getElementById("variant-swatches");
+  const checkbox = modelViewer.querySelector('#show-dimensions');
+const dimElements = [
+  ...modelViewer.querySelectorAll('button.dim'),
+  modelViewer.querySelector('#dimLines')
+];
+ modelViewer.querySelector('#src').addEventListener('input', (event) => {
                     modelViewer.src = event.target.value;
+                   
                   });
 
-                  const checkbox = modelViewer.querySelector('#show-dimensions');
+                 
 
-                  const dimElements = [...modelViewer.querySelectorAll('button'), modelViewer.querySelector('#dimLines')];
+modelViewer.addEventListener('camera-change', () => {
+  const hotspot = modelViewer.queryHotspot('hotspot-3');
+  if (hotspot && hotspot.canvasPosition) {
+    swatchContainer.style.left = `${hotspot.canvasPosition.x+120}px`;
+    swatchContainer.style.top = `${hotspot.canvasPosition.y + 40}px`; // Slight offset
+    swatchContainer.style.transform = `translate(-50%, 0)`;
+  }
+});
+const VARIANT_LABELS = {
+   "default": { label: "Walnut", sub: "Natural", img: "assets/texturesUI/walnut.jpg" },
+  "V0": { label: "Oak", sub: "Natural", img: "assets/texturesUI/oak.jpg" },
+  "V1": { label: "Acacia", sub: "Painted", img: "assets/texturesUI/acacia.jpg" }
+};
 
-               
-    const arButton = document.getElementById("ar-button");
+const toggleButton = document.getElementById("toggleVariantBtn");
+
+
+toggleButton.addEventListener("click", () => {
+  swatchContainer.classList.toggle("show");
+});
+
+const arButton = document.getElementById("ar-button");
 
     arButton.addEventListener("click", () => {
       modelViewer.activateAR();
     });
 
-   const svg = modelViewer.querySelector('#dimLines');
+modelViewer.addEventListener("load", () => {
+  for (const key in VARIANT_LABELS) {
+    const { label, sub, img } = VARIANT_LABELS[key];
+
+    const option = document.createElement("div");
+    option.className = "variant-option";
+    option.dataset.variant = key;
+
+    option.innerHTML = `
+    <div class="label">
+    <strong>${label}</strong>
+    <span class="sub">${sub}</span>
+  </div>
+  <div class="swatch" style="${img ? `background-image: url('${img}')` : 'background:#eee'}"></div>
+`;
+
+    option.addEventListener("click", () => {
+      modelViewer.variantName = key === "default" ? null : key;
+    });
+
+    swatchContainer.appendChild(option);
+  }
+});
+document.addEventListener("click", (e) => {
+  if (!swatchContainer.contains(e.target) && e.target !== toggleButton) {
+    swatchContainer.classList.remove("show");
+  }
+});
+
+
+  const svg = modelViewer.querySelector('#dimLines');
 
 function resizeAndPositionSVG() {
   const rect = modelViewer.getBoundingClientRect();
@@ -187,6 +152,9 @@ window.addEventListener("scroll", resizeAndPositionSVG);
 window.addEventListener("orientationchange", resizeAndPositionSVG);
 modelViewer.addEventListener("load", resizeAndPositionSVG);
 resizeAndPositionSVG();
+
+
+
                   function setVisibility(visible) {
                     dimElements.forEach((element) => {
                       if (visible) {
@@ -198,12 +166,16 @@ resizeAndPositionSVG();
                   }
 
                   checkbox.addEventListener('change', () => {
-                    setVisibility(checkbox.checked);
-                  });
+  setVisibility(checkbox.checked);
+});
 
-                  modelViewer.addEventListener('ar-status', (event) => {
-                    setVisibility(checkbox.checked && event.detail.status !== 'session-started');
-                  });
+// Ensure dimensions are hidden when entering AR
+modelViewer.addEventListener('ar-status', (event) => {
+  setVisibility(checkbox.checked && event.detail.status !== 'session-started');
+});
+
+// ✅ Set initial visibility on page load
+setVisibility(checkbox.checked);
 
                   // update svg
                   function drawLine(svgLine, dotHotspot1, dotHotspot2, dimensionHotspot) {
@@ -233,6 +205,8 @@ resizeAndPositionSVG();
                     drawLine(dimLines[4], modelViewer.queryHotspot('hotspot-dot-X-Y-Z'), modelViewer.queryHotspot('hotspot-dot-X-Y+Z'), modelViewer.queryHotspot('hotspot-dim-X-Y'));
                   };
 
+      
+   
                   modelViewer.addEventListener('load', () => {
                     const center = modelViewer.getBoundingBoxCenter();
                     const size = modelViewer.getDimensions();
@@ -305,12 +279,23 @@ resizeAndPositionSVG();
                       position: `${center.x - x2} ${center.y - y2} ${center.z + z2}`
                     });
 
-                    renderSVG();
+                    // Update material hotspot positions
+                    modelViewer.updateHotspot({
+                      name: 'hotspot-material-top',
+                      position: `${center.x} ${center.y + y2 + 0.2} ${center.z}`
+                    });
+                    
+                    modelViewer.updateHotspot({
+                      name: 'hotspot-material-legs',
+                      position: `${center.x} ${center.y - y2 - 0.2} ${center.z}`
+                    });
 
+                    renderSVG();
                     modelViewer.addEventListener('camera-change', renderSVG);
-          
                   });
-                </script>
-              
+
+</script>
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script> 
 </body>
 </html>
